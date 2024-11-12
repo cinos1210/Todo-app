@@ -2,7 +2,6 @@ import functions
 import tkinter
 import FreeSimpleGUI as sig
 
-from ToDoAPP import new_todo
 
 label = sig.Text("Type in a todo")
 input_box = sig.InputText(tooltip="Enter To-Do", key="todo")
@@ -21,8 +20,11 @@ while True:
     match event:
         case "Add":
             todos = functions.get_todos()
-            new_todo = ["todo"] + "\n"
+            new_todo = values["todo"] + "\n"
             todos.append(new_todo)
             functions.set_todos(todos)
+        case sig.WIN_CLOSED:
+            break
+
 
 windows.close()

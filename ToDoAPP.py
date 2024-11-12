@@ -6,7 +6,7 @@ from functions import *
 while True:
     now = time.strftime("it's %b - %d, %H:%M:%S")
     print(now)
-    user_action = input("type 'add', 'show' or edit: ")
+    user_action = input("type 'add', 'show' or edit or exit: ")
     user_action.strip()
     #show()
     # Obtiene la respuesta del usuario y borra espacios añadidos
