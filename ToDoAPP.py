@@ -12,7 +12,7 @@ while True:
     # Obtiene la respuesta del usuario y borra espacios añadidos
 
     if user_action.startswith("add"):
-        todo = user_action[4:] + "\n"  # take the todo after the first 4 characters of the string.
+        todo = user_action[4:] + "\n"  # take the to-do after the first 4 characters of the string.
 
         todos = get_todos()
 
@@ -29,12 +29,12 @@ while True:
 
     elif user_action.startswith("edit"):
         try:
-            number = int(user_action[5:])  # take the number of todo after the 5 characters and then convert it to integer
+            number = int(user_action[5:])  # take the number of to-do after the 5 characters and then convert it to integer
             number = number - 1
 
             todos = get_todos()
 
-            # "number = int(input("Number of the todo to edit: "))
+            # "number = int(input("Number of the to-do to edit: "))
             # number = number -1
 
             new_todo = input("Enter new todo: ")
@@ -49,7 +49,7 @@ while True:
 
     elif user_action.startswith("complete"):
         try:
-            number = int(user_action[9:])  # take the number of todo after the 5 characters and then convert it to integer
+            number = int(user_action[9:])  # take the number of to-do after the 5 characters and then convert it to integer
 
             todos = get_todos()
             index = number - 1
