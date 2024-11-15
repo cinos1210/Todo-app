@@ -12,13 +12,20 @@ list_box = sig.Listbox(values=functions.get_todos(),
                        key="todos",
                        enable_events=True,
                        size=[45, 10])
+
 edit_button = sig.Button("Edit")
 
+complete_button = sig.Button("Complete")
 
+exit_button = sig.Button("Exit")
 
+#windows setup
+layout = [[label], [input_box,add_button],[list_box,edit_button,complete_button],[exit_button]]
 windows = sig.Window("My To-Do App",
-                     layout=[[label], [input_box,add_button],[list_box,edit_button]],
+                     layout=layout,
                      font=('Arial',20))
+
+
 while True:
     event, values = windows.read()
     print(event)
@@ -43,8 +50,17 @@ while True:
             windows['todos'].update(values=todos)
         case"todos":
             windows['todo'].update(value=values['todos'][0])
-        case sig.WIN_CLOSED:
+        case "Complete":
+            todos = functions.get_todos()
+            complete_todo = values['todos'][0]
+            todos.remove(complete_todo)
+            functions.set_todos(todos)
+            windows['todos'].update(values=todos)
+            windows['todo'].update(value='')
+        case 'Exit':
             break
 
+        case sig.WIN_CLOSED:
+            break
 
 windows.close()

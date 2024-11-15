@@ -1,8 +1,4 @@
-stop maika
 destroy the tower
-take
-throw
-show
 use the mage saff to make a way through the army 
 make sure the marchants get to the next city safe
 get milk for mama
