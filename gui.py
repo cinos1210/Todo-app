@@ -1,13 +1,30 @@
+import sys
+
 import functions
 import tkinter
 import FreeSimpleGUI as sig
 import time
+import os
+
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+if not os.path.exists(resource_path("todos.txt")):
+    with open(resource_path("todos.txt"), "w") as file:
+        pass
 
 sig.theme("DarkPurple4")
 #Add layout
 label = sig.Text("Type in a todo")
 input_box = sig.InputText(tooltip="Enter To-Do", key="todo")
-add_button = sig.Button("Add")
+add_button = sig.Button(size=15, image_source=resource_path("add.png"), mouseover_colors="LightBlue2",key="Add")
 
 #edit layout
 list_box = sig.Listbox(values=functions.get_todos(),
@@ -17,7 +34,7 @@ list_box = sig.Listbox(values=functions.get_todos(),
 
 edit_button = sig.Button("Edit")
 
-complete_button = sig.Button("Complete")
+complete_button = sig.Button(size=15, image_source=resource_path("complete.png"), mouseover_colors="LightBlue2",key="Complete")
 
 exit_button = sig.Button("Exit")
 
