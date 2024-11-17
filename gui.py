@@ -1,7 +1,9 @@
 import functions
 import tkinter
 import FreeSimpleGUI as sig
+import time
 
+sig.theme("DarkPurple4")
 #Add layout
 label = sig.Text("Type in a todo")
 input_box = sig.InputText(tooltip="Enter To-Do", key="todo")
@@ -19,18 +21,20 @@ complete_button = sig.Button("Complete")
 
 exit_button = sig.Button("Exit")
 
+Clock = sig.Text('',key='clock')
+
+
 #windows setup
-layout = [[label], [input_box,add_button],[list_box,edit_button,complete_button],[exit_button]]
+layout = [[Clock],[label], [input_box,add_button],[list_box,edit_button,complete_button],[exit_button]]
 windows = sig.Window("My To-Do App",
                      layout=layout,
                      font=('Arial',20))
 
+now = time.strftime("it's %b - %d, %H:%M:%S")
 
 while True:
-    event, values = windows.read()
-    print(event)
-    print(values)
-
+    event, values = windows.read(timeout=200)
+    windows['clock'].update(value=now)
     match event:
         case "Add":
             todos = functions.get_todos()
@@ -41,22 +45,29 @@ while True:
 
 
         case "Edit":
-            todos = functions.get_todos()
-            edit_todo = values['todos'][0]
-            new_todo = values['todo'] + "\n"
-            index = todos.index(edit_todo)
-            todos[index]= new_todo
-            functions.set_todos(todos)
-            windows['todos'].update(values=todos)
+            try:
+                todos = functions.get_todos()
+                edit_todo = values['todos'][0]
+                new_todo = values['todo'] + "\n"
+                index = todos.index(edit_todo)
+                todos[index]= new_todo
+                functions.set_todos(todos)
+                windows['todos'].update(values=todos)
+            except IndexError:
+                sig.popup('Please select an item first.')
+
         case"todos":
             windows['todo'].update(value=values['todos'][0])
         case "Complete":
-            todos = functions.get_todos()
-            complete_todo = values['todos'][0]
-            todos.remove(complete_todo)
-            functions.set_todos(todos)
-            windows['todos'].update(values=todos)
-            windows['todo'].update(value='')
+            try:
+                todos = functions.get_todos()
+                complete_todo = values['todos'][0]
+                todos.remove(complete_todo)
+                functions.set_todos(todos)
+                windows['todos'].update(values=todos)
+                windows['todo'].update(value='')
+            except IndexError:
+                sig.popup('Please select an item first.')
         case 'Exit':
             break
 
